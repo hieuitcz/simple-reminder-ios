@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Build unsigned app for iPhoneOS
         run: |
@@ -55,7 +55,7 @@ jobs:
           (cd "$(dirname "$APP_OUTPUT_DIR")" && /usr/bin/zip -qry "$(basename "$UNSIGNED_IPA_PATH")" "Payload")
 
       - name: Upload IPA artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ios-ipa-unsigned
           path: build/SimpleReminder-unsigned.ipa
