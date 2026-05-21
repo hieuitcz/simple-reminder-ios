@@ -11,6 +11,7 @@
 		A10000020000000000000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000120000000000000012 /* ContentView.swift */; };
 		A10000030000000000000003 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000130000000000000013 /* Reminder.swift */; };
 		A10000040000000000000004 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10000140000000000000014 /* Assets.xcassets */; };
+		A10000050000000000000005 /* ReminderNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000150000000000000015 /* ReminderNotificationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		A10000120000000000000012 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A10000130000000000000013 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		A10000140000000000000014 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A10000150000000000000015 /* ReminderNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderNotificationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 				A10000110000000000000011 /* SimpleReminderApp.swift */,
 				A10000120000000000000012 /* ContentView.swift */,
 				A10000130000000000000013 /* Reminder.swift */,
+				A10000150000000000000015 /* ReminderNotificationManager.swift */,
 				A10000140000000000000014 /* Assets.xcassets */,
 			);
 			path = SimpleReminder;
@@ -131,6 +134,7 @@
 				A10000010000000000000001 /* SimpleReminderApp.swift in Sources */,
 				A10000020000000000000002 /* ContentView.swift in Sources */,
 				A10000030000000000000003 /* Reminder.swift in Sources */,
+				A10000050000000000000005 /* ReminderNotificationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

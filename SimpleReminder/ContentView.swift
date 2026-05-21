@@ -6,6 +6,7 @@ struct ContentView: View {
     @State private var reminders: [Reminder] = []
     @State private var newTitle: String = ""
     @State private var newDueDate: Date = Date()
+    @State private var notificationsAllowed: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -24,6 +25,12 @@ struct ContentView: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .disabled(newTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+
+                    if !notificationsAllowed {
+                        Text("Chua cap quyen thong bao. App van luu nhac nho, nhung se khong nhac dung gio.")
+                            .font(.caption)
+                            .foregroundStyle(.orange)
+                    }
                 }
                 .padding()
                 .background(Color(.secondarySystemBackground))
@@ -44,6 +51,16 @@ struct ContentView: View {
                             HStack(spacing: 12) {
                                 Toggle("", isOn: $reminder.isDone)
                                     .labelsHidden()
+                                    .onChange(of: reminder.isDone) { isDone in
+                                        let currentReminder = reminder
+                                        Task {
+                                            if isDone {
+                                                await ReminderNotificationManager.cancelNotification(id: currentReminder.id)
+                                            } else {
+                                                await ReminderNotificationManager.scheduleNotification(for: currentReminder)
+                                            }
+                                        }
+                                    }
 
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(reminder.title)
@@ -70,7 +87,13 @@ struct ContentView: View {
                     .opacity(reminders.isEmpty ? 0 : 1)
             )
         }
-        .onAppear(perform: loadReminders)
+        .onAppear {
+            loadReminders()
+            Task {
+                notificationsAllowed = await ReminderNotificationManager.requestAuthorizationIfNeeded()
+                await ReminderNotificationManager.syncNotifications(with: reminders)
+            }
+        }
         .onChange(of: reminders) { _ in
             saveReminders()
         }
@@ -80,15 +103,26 @@ struct ContentView: View {
         let title = newTitle.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !title.isEmpty else { return }
 
-        reminders.append(Reminder(title: title, dueDate: newDueDate))
+        let reminder = Reminder(title: title, dueDate: newDueDate)
+        reminders.append(reminder)
         reminders.sort { $0.dueDate < $1.dueDate }
+
+        Task {
+            await ReminderNotificationManager.scheduleNotification(for: reminder)
+        }
 
         newTitle = ""
         newDueDate = Date()
     }
 
     private func deleteReminder(at offsets: IndexSet) {
+        let removedIDs = offsets.map { reminders[$0].id }
         reminders.remove(atOffsets: offsets)
+        Task {
+            for id in removedIDs {
+                await ReminderNotificationManager.cancelNotification(id: id)
+            }
+        }
     }
 
     private func loadReminders() {
