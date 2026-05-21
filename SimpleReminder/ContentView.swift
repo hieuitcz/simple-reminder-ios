@@ -30,7 +30,14 @@ struct ContentView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
 
                 if reminders.isEmpty {
-                    ContentUnavailableView("Chua co nhac nho", systemImage: "bell.slash")
+                    VStack(spacing: 10) {
+                        Image(systemName: "bell.slash")
+                            .font(.system(size: 42))
+                            .foregroundStyle(.secondary)
+                        Text("Chua co nhac nho")
+                            .foregroundStyle(.secondary)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     List {
                         ForEach($reminders) { $reminder in
