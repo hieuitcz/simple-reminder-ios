@@ -57,13 +57,11 @@ struct ContentView: View {
             }
             .padding()
             .navigationTitle("Simple Reminder")
-            .toolbar(content: {
-                ToolbarItem(placement: .topBarTrailing) {
-                    EditButton()
-                        .disabled(reminders.isEmpty)
-                        .opacity(reminders.isEmpty ? 0 : 1)
-                }
-            })
+            .navigationBarItems(
+                trailing: EditButton()
+                    .disabled(reminders.isEmpty)
+                    .opacity(reminders.isEmpty ? 0 : 1)
+            )
         }
         .onAppear(perform: loadReminders)
         .onChange(of: reminders) { _ in
