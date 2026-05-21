@@ -13,6 +13,7 @@ jobs:
     timeout-minutes: 30
 
     env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
       PROJECT_PATH: SimpleReminder.xcodeproj
       SCHEME: SimpleReminder
       CONFIGURATION: Release
