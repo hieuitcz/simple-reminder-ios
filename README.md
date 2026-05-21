@@ -33,7 +33,7 @@ IPA output path:
 
 - `build/ipa/`
 
-## Build IPA on GitHub Actions (from Windows)
+## Build unsigned IPA on GitHub Actions (from Windows)
 
 Workflow file:
 
@@ -41,15 +41,15 @@ Workflow file:
 
 Required repository secrets:
 
-- `IOS_P12_BASE64`: base64 of Apple Distribution certificate (`.p12`)
-- `IOS_P12_PASSWORD`: password of that `.p12`
-- `IOS_MOBILEPROVISION_BASE64`: base64 of provisioning profile (`.mobileprovision`)
-- `APPLE_TEAM_ID`: your Apple Developer Team ID
-- `IOS_BUNDLE_ID`: bundle id that matches provisioning profile (example: `com.yourcompany.SimpleReminder`)
+- None
 
 How to run:
 
 1. Push source code to GitHub repo.
-2. Add the 5 secrets above in `Settings -> Secrets and variables -> Actions`.
-3. Go to `Actions -> Build iOS IPA -> Run workflow`.
-4. Download `.ipa` from workflow artifact `ios-ipa`.
+2. Go to `Actions -> Build Unsigned iOS IPA -> Run workflow`.
+3. Download `.ipa` from workflow artifact `ios-ipa-unsigned`.
+
+Notes:
+
+- This is an unsigned IPA (`ipa trang`).
+- For sideloading, tools like Sideloadly/AltStore typically re-sign at install time with your Apple ID.
